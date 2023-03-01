@@ -7,8 +7,9 @@ from graia.saya import Channel
 from graia.saya.builtins.broadcast.schema import ListenerSchema
 
 import openai
+import os
 
-openai.api_key = "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"
+openai.api_key = os.getenv("GPT_KEY")
 def askChatGPT(question):
     prompt = question
 
