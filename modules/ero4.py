@@ -10,30 +10,37 @@ import openai
 import os
 
 openai.api_key = os.getenv("GPT_KEY")
-def askChatGPT(question):
-    prompt = question
+def sendToOpenai(question):
 
-    completions = openai.Completion.create(
-        engine="text-davinci-003",
-        prompt=prompt,
-        max_tokens=1024,
-        n=1,
-        stop=None,
-        temperature=0.5,
-    )
+    completions = openai.ChatCompletion.create(
+        model="gpt-3.5-turbo",
+        messages=[
+        {"role": "user", "content": f"{question}"},
+    ]
+)
 
-    message = completions.choices[0].text
-    return message
+    resMes = completions.choices[0].message.content
+    return 1,resMes
 
 channel = Channel.current()
 
 @channel.use(ListenerSchema(listening_events=[GroupMessage]))
 async def setu(app: Ariadne, group: Group, message: MessageChain):
     if message.display[0:3] == "ai ":
-        res = askChatGPT(message.display[3:])
         await app.send_message(
-            group,
-            MessageChain(f"{res[2:]}"),
-         )
+                group,
+                MessageChain(f"已收到，请稍等返回信息。"),
+             )
+        status_code, res = sendToOpenai(message.display[3:])
+        if status_code == 1:
+            await app.send_message(
+                group,
+                MessageChain(f"(以下回答均源自于openai gpt-3.5-turbo模型，和帐号持有者无关，不代表帐号持有者的任何立场）\n{res}"),
+             )
+        if status_code ==0:
+            await app.send_message(
+                group,
+                MessageChain(f"{res}"),
+             )
     else:
         return 
