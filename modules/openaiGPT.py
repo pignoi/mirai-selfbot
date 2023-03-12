@@ -1,15 +1,14 @@
 from graia.ariadne.app import Ariadne
 from graia.ariadne.event.message import GroupMessage
 from graia.ariadne.message.chain import MessageChain
-from graia.ariadne.model import Group
+from graia.ariadne.model import Group,Member
 
 from graia.saya import Channel
 from graia.saya.builtins.broadcast.schema import ListenerSchema
+from graia.ariadne.message.element import At
 
 import openai
-import aiohttp
 import os
-import asyncio
 
 openai.api_key = os.getenv("GPT_KEY")
 def sendToOpenai(question):
@@ -47,7 +46,7 @@ async def newSend(question):
 channel = Channel.current()
 
 @channel.use(ListenerSchema(listening_events=[GroupMessage]))
-async def setu(app: Ariadne, group: Group, message: MessageChain):
+async def setu(app: Ariadne, group: Group, member : Member, message: MessageChain):
     if message.display[0:3] == "ai ":
         await app.send_message(
                 group,
@@ -59,12 +58,13 @@ async def setu(app: Ariadne, group: Group, message: MessageChain):
         if status_code == 200:
             await app.send_message(
                 group,
-                MessageChain(f"(以下回答均源自于openai gpt-3.5-turbo模型，和帐号持有者无关，不代表帐号持有者的任何立场）\n{res}"),
+                MessageChain([At(member.id),"\n(以下回答均源自于openai gpt-3.5-turbo模型，不代表帐号持有者的任何立场）",res]),
              )
+            
         if status_code != 200:
             await app.send_message(
                 group,
-                MessageChain(f"{res}"),
+                MessageChain([At(member.id),"\n",res]),
              )
     else:
         return 

@@ -1,0 +1,11 @@
+{
+    "api-http":{
+        "HttpConfig":"",
+        "WebsocketConfig":"",
+        "password":""
+    },
+    "user":{
+        "qqnumber":[],
+        "manageqq":[]
+    }
+}

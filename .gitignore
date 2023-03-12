@@ -1,4 +1,4 @@
 modules/*data*
 **/__pycache__/
 output.log
-fonts/
+setting.json

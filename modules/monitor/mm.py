@@ -10,7 +10,10 @@ from graia.saya.builtins.broadcast.schema import ListenerSchema
 from PIL import Image, ImageFont, ImageDraw
 from io import BytesIO
 
+from loadJson import loadJson
+
 channel = Channel.current()
+managers = loadJson().getManage()
 
 def getOHlog(num):
     num = int(num)
@@ -31,7 +34,7 @@ def getOHlog(num):
 
 @channel.use(ListenerSchema(listening_events=[FriendMessage]))
 async def setu(app: Ariadne, friend: Friend, message: MessageChain):
-    if friend.id==404663951 and message.display[0:2] == "日志":
+    if (friend.id in managers) and message.display[0:2] == "日志":
         imbytes = getOHlog(message.display[3:])
 
         await app.send_message(friend, MessageChain(
