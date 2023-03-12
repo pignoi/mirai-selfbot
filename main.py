@@ -8,10 +8,10 @@ from graia.ariadne.connection.config import (
     config,
 )
 from graia.broadcast import Broadcast
-# from graia.ariadne.event.message import GroupMessage
-# from graia.ariadne.message.chain import MessageChain
-# from graia.ariadne.model import Group
 from graia.saya import Saya
+
+from loguru import logger
+logger.add("output.log")
 
 saya = create(Saya)
 
@@ -34,5 +34,7 @@ with saya.module_context():
         saya.require(f"modules.{module_info.name}")
         saya.require(f"modules.arkCard.doRandom")
         saya.require(f"modules.arkCard.localmain")
+
+        saya.require(f"modules.monitor.mm")
 
 app.launch_blocking()

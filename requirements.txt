@@ -2,3 +2,4 @@ graia-saya
 graia-ariadne
 
 openai
+pillow

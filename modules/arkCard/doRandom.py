@@ -1,7 +1,7 @@
 import random
 import json
 
-from graia.ariadne.message.formatter import Formatter
+# from graia.ariadne.message.formatter import Formatter
 from graia.ariadne.message.element import Face
 
 class arkGetCard:
