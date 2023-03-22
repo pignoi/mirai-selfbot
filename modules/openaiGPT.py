@@ -14,7 +14,7 @@ openai.api_key = os.getenv("GPT_KEY")
 def sendToOpenai(question):
 
     completions = openai.ChatCompletion.create(
-        model="gpt-3.5-turbo",
+        model="gpt-4",
         messages=[
         {"role": "user", "content": f"{question}"},
     ]
@@ -39,7 +39,7 @@ async def newSend(question):
     if status_code == 200:
         resMes = ret["choices"][0]["message"]["content"]
     else:
-        resMes = "ERROR HASE!"
+        resMes = f"{status_code}, ERROR HASE!"
 
     return status_code, resMes
 

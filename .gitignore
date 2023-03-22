@@ -2,3 +2,5 @@ modules/*data*
 **/__pycache__/
 output.log
 setting.json
+modules/aicJSONs/*.json
+! modules/aicJSONs/xxx_xxx.json

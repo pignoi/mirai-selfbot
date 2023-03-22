@@ -15,7 +15,7 @@ pip install -r requirements.txt
 要求的拓展：[mirai](https://github.com/mamoe/mirai)   [mirai-api-http](https://github.com/project-mirai/mirai-api-http)
 
 ## 相关基础设置
-初次启动```main.py```之前，需要编辑```setting-init.json```，其说明如下：
+初次启动`main.py`之前，需要编辑`setting-init.json`，其说明如下：
 ```json
 {
     "api-http":{
@@ -25,7 +25,7 @@ pip install -r requirements.txt
     },
     "user":{
         "qqnumber":[114514],    // mirai机器人的qq号，不要以字符形式填写
-        "manageqq":[]    // 作为管理员的qq号，可以设置成大号
+        "manageqq":[1919810]    // 作为管理员的qq号，可以设置成大号
     }
 }
 ```

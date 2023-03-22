@@ -18,7 +18,7 @@ async def setu(app: Ariadne, group: Group, message: MessageChain):
         else:
             key = message.display.split("，")[1]
             answer = message.display.split("，")[2]
-            with open("modules/ero3.data","a") as f:
+            with open("modules/ero3.data","a+") as f:
                 f.write(f"{key}$split${answer}\n")
             re_mes = "记住了！"
         await app.send_message(
@@ -26,8 +26,7 @@ async def setu(app: Ariadne, group: Group, message: MessageChain):
             MessageChain(f"{re_mes}"),
          )
     if message.display[0:3] == "你说，":
-        keys = []
-        answers = []
+        u_ans = []
         
         u_key = message.display[3:]
         with open("modules/ero3.data") as f:
@@ -36,15 +35,16 @@ async def setu(app: Ariadne, group: Group, message: MessageChain):
         for i in q:
             s_key = i.split("$split$")[0]
             if s_key == u_key:
-                u_ans = i.split("$split$")[1][:-1]
-                break
-            else:
-                u_ans = "人家不知道哦"
-                
-        await app.send_message(
-            group,
-            MessageChain(f"{u_ans}"),
-         )
-        
+                u_ans.append(i.split("$split$")[1][:-1])
+        if u_ans == []:   
+            await app.send_message(
+                group,
+                MessageChain("人家不知道哦~"),
+            )
+        else:
+            await app.send_message(
+                group,
+                MessageChain(" ".join(u_ans)),
+            )
     else:
         return 
