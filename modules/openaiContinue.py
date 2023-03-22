@@ -57,7 +57,7 @@ class oneCont:
                 if jsonData[times[-1]]["status"] == "closed":
                     resMes = "没有正在进行的对话，请重新开始对话"
 
-                elif self.now_time - float(jsonData[times[-1]]["now_time"]) > self.timeout:
+                elif self.now_time - float(jsonData[times[-1]]["last_time"]) > self.timeout:
                     resMes = "超时，请重新开始对话"
                     jsonData[times[-1]]["status"] = "closed"
 
