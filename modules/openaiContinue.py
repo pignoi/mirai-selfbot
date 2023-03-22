@@ -35,13 +35,13 @@ class oneCont:
                     resMes = "上一个会话尚未结束，请继续上一个对话"
 
                 elif jsonData[last_time]["status"] == "closed":
-                    jsonData[str(self.now_time)] = {"status":"opening", "history":["Hello, how can I help you?"]}
+                    jsonData[str(self.now_time)] = {"status":"opening", "last_time":self.now_time, "history":["Hello, how can I help you?"]}
                     with open(self.jsonFile, "w") as fw:
                         fw.write(json.dumps(jsonData, indent=4, ensure_ascii=False))
                     resMes = "会话已开始，请按照“aic +提问内容”的格式进行连续问答"
         else:
             with open(self.jsonFile, "w") as f:
-                jsonData = {str(self.now_time):{"status":"opening", "history":["Hello, how can I help you?"]}}
+                jsonData = {str(self.now_time):{"status":"opening", "last_time":self.now_time, "history":["Hello, how can I help you?"]}}
                 f.writable()
                 f.write(json.dumps(jsonData, indent=4, ensure_ascii=False))
 
@@ -57,7 +57,7 @@ class oneCont:
                 if jsonData[times[-1]]["status"] == "closed":
                     resMes = "没有正在进行的对话，请重新开始对话"
 
-                elif self.now_time - float(times[-1]) > self.timeout:
+                elif self.now_time - float(jsonData[times[-1]]["now_time"]) > self.timeout:
                     resMes = "超时，请重新开始对话"
                     jsonData[times[-1]]["status"] = "closed"
 
@@ -75,6 +75,7 @@ class oneCont:
                         history.append(response)
 
                         jsonData[times[-1]]["history"] = history
+                        jsonData[times[-1]]["last_time"] = self.now_time
                 with open(self.jsonFile,"w") as fw:
                     fw.write(json.dumps(jsonData, indent=4, ensure_ascii=False))
 

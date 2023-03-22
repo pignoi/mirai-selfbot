@@ -3,4 +3,4 @@ modules/*data*
 output.log
 setting.json
 modules/aicJSONs/*.json
-! modules/aicJSONs/xxx_xxx.json
+!modules/aicJSONs/xxx_xxx.json
