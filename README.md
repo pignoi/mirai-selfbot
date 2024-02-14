@@ -11,6 +11,7 @@ conda activate <your_name>
 pip install -r requirements.txt
 ```
 ### mirai环境配置
+**由于mirai现在支持的手段相对较为复杂（overflow+openshamrock），对服务器有虚拟化要求或者有闲置的Android手机，因此作者已经放弃本项目的继续开发和维护，转战TG吧孩子，人家api甚至有官方文档xD**
 参考TBC<br>
 要求的拓展：[mirai](https://github.com/mamoe/mirai)   [mirai-api-http](https://github.com/project-mirai/mirai-api-http)
 
